@@ -1,0 +1,4 @@
+Instance Name: vm-srv001-p-zqpv
+Private IP: 10.0.0.11
+Public IP: 35.237.124.86
+Root Password: lvIAAR@})g
