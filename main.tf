@@ -51,8 +51,19 @@ resource "google_compute_instance" "vm_instance" {
       "sudo passwd root",
       "echo '${random_password.root_password.result}'",
       "echo '${random_password.root_password.result}'",
+      "exit 0"
     ]
   }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo "Instance Name: ${google_compute_instance.vm_instance.name}" > instance_details.txt
+      echo "Private IP: ${google_compute_instance.vm_instance.network_interface.0.network_ip}" >> instance_details.txt
+      echo "Public IP: ${google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip}" >> instance_details.txt
+      echo "Root Password: ${random_password.root_password.result}" >> instance_details.txt
+    EOT
+  }
+
 }
 
 
