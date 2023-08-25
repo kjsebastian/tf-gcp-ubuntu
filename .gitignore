@@ -1,4 +1,6 @@
 gcp-credentials.json
 terraform.tfstate
 terraform.tfstate.backup
-/.terraform/*
+/providers/*
+/modules/*
+.terraform.lock.hcl 
