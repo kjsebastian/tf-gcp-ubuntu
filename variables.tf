@@ -26,6 +26,11 @@ variable "machine_type" {
   description = "Machine type for the VM"
   type        = string
   default     = "n2-standard-2"
+  
+  validation {
+    condition     = can(regex("n2-standard", var.machine_type))
+    error_message = "Invalid machine_type. Machine type must start with ${(var.machine_type)}"
+  }
 }
 
 variable "network_id" {
@@ -54,15 +59,12 @@ variable "labels" {
 
 variable "user" {
   type    = string
-  default = "kjs"
 }
 
 variable "privatekeypath" {
   type    = string
-  default = "~/.ssh/badal-keys"
 }
 
 variable "publickeypath" {
   type    = string
-  default = "~/.ssh/badal-keys.pub"
 }

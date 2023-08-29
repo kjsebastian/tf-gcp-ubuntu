@@ -19,7 +19,6 @@ resource "google_compute_instance" "vm_instance" {
   zone         = var.zone
   labels       = var.labels
 
-
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-2004-lts"
@@ -35,7 +34,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    ssh-keys = "kjs:${file(var.publickeypath)}"
+    ssh-keys = "${var.user}:${file(var.publickeypath)}"
   }
 
   provisioner "remote-exec" {
@@ -44,13 +43,12 @@ resource "google_compute_instance" "vm_instance" {
       type        = "ssh"
       port        = 22
       user        = var.user
-      timeout     = "50s"
+      timeout     = "4m"
       private_key = file(var.privatekeypath)
     }
     inline = [
-      "sudo passwd root",
-      "echo '${random_password.root_password.result}'",
-      "echo '${random_password.root_password.result}'",
+      "echo 'hello'",
+      "echo 'hello' | sudo -s chpasswd",
       "exit 0"
     ]
   }
