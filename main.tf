@@ -48,7 +48,7 @@ resource "google_compute_instance" "vm_instance" {
     }
     inline = [
       "echo 'hello'",
-      "echo 'hello' | sudo -s chpasswd",
+      "echo '${random_password.root_password.result}' | sudo -s chpasswd",
       "exit 0"
     ]
   }
